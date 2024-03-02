@@ -30,59 +30,98 @@ class _AbsensiMahasiswaState extends State<AbsensiMahasiswa> {
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: Column(children: [
               Container(
-                  child: Center(
-                child: Text(
-                  'ABSENSI MAHASISWA',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 20,
-                    color: Colors.green,
+                child: Center(
+                  child: Text(
+                    'ABSENSI MAHASISWA',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 36,
+                    ),
                   ),
                 ),
-              )),
+              ),
               SizedBox(
                 height: spacing,
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: listKelas.length,
-                    itemBuilder: (context, index) {
-                      return TombolAbsensi(
-                          label: listKelas[index], color: colorButton[index]);
-                    }),
-              ),
+              PilihanKelas(
+                  namaMatkul: 'Alpro A',
+                  waktuTerjadwal: 'Senin, 09.00-11.00',
+                  ruang: 'Labkom Net 2',
+                  dosenPengampu: 'MM',
+                  fakultas: 'Saintek'),
+              PilihanKelas(
+                  namaMatkul: 'Alpro B',
+                  waktuTerjadwal: 'Selasa, 09.00-11.00',
+                  ruang: 'Labkom Net 2',
+                  dosenPengampu: 'TP',
+                  fakultas: 'Saintek')
             ]),
           ),
         ));
   }
 }
 
-class TombolAbsensi extends StatelessWidget {
-  const TombolAbsensi({super.key, required this.label, required this.color});
+class PilihanKelas extends StatelessWidget {
+  final String namaMatkul;
+  final String waktuTerjadwal;
+  final String ruang;
+  final String dosenPengampu;
+  final String fakultas;
 
-  final String label;
-  final Color color;
+  const PilihanKelas(
+      {super.key,
+      required this.namaMatkul,
+      required this.waktuTerjadwal,
+      required this.ruang,
+      required this.dosenPengampu,
+      required this.fakultas});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: fontSizeBody + 4),
-          ),
-        ],
-      ),
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width * 0.85,
       height: 70,
-      margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      margin: EdgeInsets.only(bottom: spacingRow + 2),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.redAccent.shade100,
+          border: Border.all(
+              style: BorderStyle.solid, color: Colors.redAccent.shade400)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                namaMatkul,
+                style: TextStyle(fontSize: 23),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.65,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        waktuTerjadwal,
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      ),
+                      Text(
+                        ruang,
+                        style: TextStyle(fontWeight: FontWeight.normal),
+                      )
+                    ]),
+              ),
+            ],
+          ),
+          CircleAvatar(
+            child: Text(dosenPengampu),
+          )
+        ],
       ),
     );
   }
