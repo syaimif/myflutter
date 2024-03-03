@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pertemuan4_flutter/Objects/Matkul.dart';
 import 'package:pertemuan4_flutter/Screens/Beranda.dart';
+
+import '../CustomWidgets/PilihanKelas.dart';
 
 class AbsensiMahasiswa extends StatefulWidget {
   const AbsensiMahasiswa({super.key});
@@ -11,12 +14,42 @@ class AbsensiMahasiswa extends StatefulWidget {
 double spacingRow = 10;
 double iconSizeColumn = 10;
 double fontSizeBody = 10;
-List listKelas = ["Alpro A", "Alpro B", "Pemweb A", "Pemweb B"];
+
 List colorButton = [Colors.grey, Colors.green, Colors.blue, Colors.orange];
 
 class _AbsensiMahasiswaState extends State<AbsensiMahasiswa> {
   @override
   Widget build(BuildContext context) {
+    Matkul matkul1 = Matkul(
+        namaMatkul: "Alpro 1",
+        waktuTerjadwal: "Senin, 09.00-11.00",
+        dosenPengampu: "MM",
+        ruangan: "Labkom Net 1",
+        fakultas: "SAINTEK");
+
+    Matkul matkul2 = Matkul(
+        namaMatkul: "Pemweb 2",
+        waktuTerjadwal: "Selasa, 09.00-11.00",
+        dosenPengampu: "TP",
+        ruangan: "Lab Saintek",
+        fakultas: "FIK");
+
+    Matkul matkul3 = Matkul(
+        namaMatkul: "Pendidikan Agama Islam",
+        waktuTerjadwal: "Senin, 09.00-11.00",
+        dosenPengampu: "IM",
+        ruangan: "U-201",
+        fakultas: "FAI");
+
+    Matkul matkul4 = Matkul(
+        namaMatkul: "Bisnis Masa Depan",
+        waktuTerjadwal: "Senin, 09.00-11.00",
+        dosenPengampu: "SW",
+        ruangan: "U-202",
+        fakultas: "FBBP");
+
+    List<Matkul> listMatkul = [matkul1, matkul2, matkul3, matkul4];
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blueAccent,
@@ -44,85 +77,25 @@ class _AbsensiMahasiswaState extends State<AbsensiMahasiswa> {
               SizedBox(
                 height: spacing,
               ),
-              PilihanKelas(
-                  namaMatkul: 'Alpro A',
-                  waktuTerjadwal: 'Senin, 09.00-11.00',
-                  ruang: 'Labkom Net 2',
-                  dosenPengampu: 'MM',
-                  fakultas: 'Saintek'),
-              PilihanKelas(
-                  namaMatkul: 'Alpro B',
-                  waktuTerjadwal: 'Selasa, 09.00-11.00',
-                  ruang: 'Labkom Net 2',
-                  dosenPengampu: 'TP',
-                  fakultas: 'Saintek')
+              Container(
+                child: Expanded(
+                  child: ListView.builder(
+                      itemCount: listMatkul.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          child: PilihanKelas(
+                              namaMatkul: listMatkul[index].namaMatkul,
+                              waktuTerjadwal: listMatkul[index].waktuTerjadwal,
+                              ruang: listMatkul[index].ruangan,
+                              dosenPengampu: listMatkul[index].dosenPengampu,
+                              fakultas: listMatkul[index].fakultas),
+                        );
+                      }),
+                ),
+              ),
             ]),
           ),
         ));
-  }
-}
-
-class PilihanKelas extends StatelessWidget {
-  final String namaMatkul;
-  final String waktuTerjadwal;
-  final String ruang;
-  final String dosenPengampu;
-  final String fakultas;
-
-  const PilihanKelas(
-      {super.key,
-      required this.namaMatkul,
-      required this.waktuTerjadwal,
-      required this.ruang,
-      required this.dosenPengampu,
-      required this.fakultas});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.85,
-      height: 70,
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      margin: EdgeInsets.only(bottom: spacingRow + 2),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.redAccent.shade100,
-          border: Border.all(
-              style: BorderStyle.solid, color: Colors.redAccent.shade400)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                namaMatkul,
-                style: TextStyle(fontSize: 23),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.65,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        waktuTerjadwal,
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      ),
-                      Text(
-                        ruang,
-                        style: TextStyle(fontWeight: FontWeight.normal),
-                      )
-                    ]),
-              ),
-            ],
-          ),
-          CircleAvatar(
-            child: Text(dosenPengampu),
-          )
-        ],
-      ),
-    );
   }
 }

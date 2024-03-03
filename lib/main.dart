@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pertemuan4_flutter/Screens/AbsenKelas.dart';
 import 'package:pertemuan4_flutter/Screens/AbsensiMahasiswa.dart';
 import 'package:pertemuan4_flutter/Screens/Account.dart';
 import 'package:pertemuan4_flutter/Screens/GameLemparDadu.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         'LihatNilai': (context) => LihatNilai(),
         'Akun': (context) => Akun(),
         'Settings': (context) => Setting(),
+        'AbsenKelas': (context) => AbsenKelas(
+              namaKelas: ModalRoute.of(context)!.settings.arguments as String,
+            )
       },
     );
   }
