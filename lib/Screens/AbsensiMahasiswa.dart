@@ -82,14 +82,17 @@ class _AbsensiMahasiswaState extends State<AbsensiMahasiswa> {
                   child: ListView.builder(
                       itemCount: listMatkul.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 16),
-                          child: PilihanKelas(
-                              namaMatkul: listMatkul[index].namaMatkul,
-                              waktuTerjadwal: listMatkul[index].waktuTerjadwal,
-                              ruang: listMatkul[index].ruangan,
-                              dosenPengampu: listMatkul[index].dosenPengampu,
-                              fakultas: listMatkul[index].fakultas),
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'AbsenKelas',
+                                arguments: listMatkul[index]);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 16),
+                            child: PilihanKelas(
+                              matkul: listMatkul[index],
+                            ),
+                          ),
                         );
                       }),
                 ),
